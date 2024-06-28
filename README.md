@@ -83,6 +83,7 @@ Advantages
 * Avoids Application Joins
 * Provides better read performances
 * Can update related data in a single write/update/delete operation
+  
 Disadvantages - Schema Anti-Patterns
 * Can create large documents - latency - slow responses
 * Unbounded documents - exceeding document size ( 16 mb - bson limit )
@@ -93,6 +94,7 @@ Advantages
 * Simple and Sufficient for most cases
 * No duplication
 * Smaller Documents
+  
 Disadvantages
 * Need to join data from multiple documents
 * Need to access different documents to access data increasing cost of queries
