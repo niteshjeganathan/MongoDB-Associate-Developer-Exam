@@ -43,7 +43,7 @@
 * Documents contain many fields, and fields could contain many data types in different documents ( Polymorphic Documents )
 * Optional Schema Validation available
 
-### Data Modeling
+## Data Modeling
 * Process of defining data and their relationships
 * Easier to manage data,  make queries efficient, use less memory and CPU, reduce costs
 * Data accessed together, should be stored together
@@ -77,5 +77,24 @@
     "cast": [ObjectId(123), ObjectId(456)]
 }
 ```
+
+### Embedding 
+Advantages
+* Avoids Application Joins
+* Provides better read performances
+* Can update related data in a single write/update/delete operation
+Disadvantages - Schema Anti-Patterns
+* Can create large documents - latency - slow responses
+* Unbounded documents - exceeding document size ( 16 mb - bson limit )
+* Data Duplication
+
+### Referencing ( Data Linking, Data Normalisation ) 
+Advantages 
+* Simple and Sufficient for most cases
+* No duplication
+* Smaller Documents
+Disadvantages
+* Need to join data from multiple documents
+* Need to access different documents to access data increasing cost of queries
 
 
