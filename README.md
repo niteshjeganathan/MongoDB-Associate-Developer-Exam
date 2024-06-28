@@ -34,11 +34,11 @@
 > Collection: Grouping of similar documents ( need not be of same format )
 > Database: A container for collection
 > Flexible Schema Model
-* MongoDB database is at the core of Atlas, which has many more features like full-text search or data visualisations ( multi-cloud developer data platform )
+ MongoDB database is at the core of Atlas, which has many more features like full-text search or data visualisations ( multi-cloud developer data platform )
 
 ### Document Model
 > Displayed in JSON, stored in BSON ( Binary JSON )
 > Strings, Objects, Arrays, Boolean, Null, Dates, Numbers, Object IDs, and more
-> Object ID - Unique Identifier - Created by default if not mentioned manually
+> Object ID - Unique Identifier - Created by default if not mentioned manually >
 > Documents contain many fields, and fields could contain many data types in different documents ( Polymorphic Documents )
 > Optional Schema Validation available
