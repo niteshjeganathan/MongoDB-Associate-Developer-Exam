@@ -49,7 +49,20 @@
 * Data accessed together, should be stored together
 * Flexible document data model ( Polymorphic ) - Schema Flexible
 * One-to-One, One-to-Many, Many-to-Many
-* Embedding, Referencing
-*
+* Embedding ( inserting related data into the document ), Referencing ( referring documents in another colection in the document )
+```javascript
+{
+    "id": ObjectID("1"),
+    "title": "Star Wars",
+    "director": "Lucas",
+    "runtime": 121
+}
+```
+
+
 ![image](https://github.com/niteshjeganathan/MongoDB-Associate-Developer-Exam/assets/89623604/6ea04305-3f60-4ac5-a317-a47df17e1f37)
+![image](https://github.com/niteshjeganathan/MongoDB-Associate-Developer-Exam/assets/89623604/c4edeff6-42b6-4c10-b9eb-3a91a1b89abb)
+![image](https://github.com/niteshjeganathan/MongoDB-Associate-Developer-Exam/assets/89623604/dbbdf092-653e-4fac-bbcb-d9dab2d70924)
+
+
 
