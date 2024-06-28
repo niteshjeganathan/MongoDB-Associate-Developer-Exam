@@ -34,7 +34,7 @@
 > Collection: Grouping of similar documents ( need not be of same format )
 > Database: A container for collection
 > Flexible Schema Model
-> MongoDB database is at the core of Atlas, which has many more features like full-text search or data visualisations ( multi-cloud developer data platform )
+* MongoDB database is at the core of Atlas, which has many more features like full-text search or data visualisations ( multi-cloud developer data platform )
 
 ### Document Model
 > Displayed in JSON, stored in BSON ( Binary JSON )
