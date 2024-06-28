@@ -51,6 +51,7 @@
 * One-to-One, One-to-Many, Many-to-Many
 * Embedding ( inserting related data into the document ), Referencing ( referring documents in another colection in the document )
 ```javascript
+// One-to-One
 {
     "id": ObjectID("1"),
     "title": "Star Wars",
