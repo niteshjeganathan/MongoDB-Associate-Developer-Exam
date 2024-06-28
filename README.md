@@ -58,12 +58,24 @@
     "director": "Lucas",
     "runtime": 121
 }
+
+// One-to-Many
+{
+    "id": ObjectID("1"),
+    "title": "Star Wars",
+    "director": "Lucas",
+    "runtime": 121,
+    "cast": ['abc', 'def']
+}
+
+// Referencing
+{
+    "id": ObjectID("1"),
+    "title": "Star Wars",
+    "director": "Lucas",
+    "runtime": 121,
+    "cast": [ObjectId(123), ObjectId(456)]
+}
 ```
-
-
-![image](https://github.com/niteshjeganathan/MongoDB-Associate-Developer-Exam/assets/89623604/6ea04305-3f60-4ac5-a317-a47df17e1f37)
-![image](https://github.com/niteshjeganathan/MongoDB-Associate-Developer-Exam/assets/89623604/c4edeff6-42b6-4c10-b9eb-3a91a1b89abb)
-![image](https://github.com/niteshjeganathan/MongoDB-Associate-Developer-Exam/assets/89623604/dbbdf092-653e-4fac-bbcb-d9dab2d70924)
-
 
 
