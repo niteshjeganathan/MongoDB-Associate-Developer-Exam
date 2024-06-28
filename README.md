@@ -99,4 +99,22 @@ Disadvantages
 * Need to join data from multiple documents
 * Need to access different documents to access data increasing cost of queries
 
+### Schema Design Patterns
+* Help plan, organise and model data
+* Anti-patterns - sub-optimal performance, scalability problems
+  1. Masssive Arrays
+  2. Massive number of collections
+  3. Bloated Documents
+  4. Unnecessary Indexes
+  5. Queries without Indexes
+  6. Data accessed together, but not stored together
+* Data Explorer
+  1. Free Tier
+  2. Shows Schema Anti-Patterns
+  3. Collection and index stats for each collection
+* Performance Advisor
+  1. M10 Tier and higher
+  2. Analyses most active collections
+  3. Recommends schema improvements
+
 
