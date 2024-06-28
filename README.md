@@ -42,3 +42,14 @@
 > Object ID - Unique Identifier - Created by default if not mentioned manually >
 > Documents contain many fields, and fields could contain many data types in different documents ( Polymorphic Documents )
 > Optional Schema Validation available
+
+### Data Modeling
+> Process of defining data and their relationships
+> Easier to manage data,  make queries efficient, use less memory and CPU, reduce costs
+> Data accessed together, should be stored together
+> Flexible document data model ( Polymorphic ) - Schema Flexible
+> One-to-One, One-to-Many, Many-to-Many
+> Embedding, Referencing
+>
+![image](https://github.com/niteshjeganathan/MongoDB-Associate-Developer-Exam/assets/89623604/6ea04305-3f60-4ac5-a317-a47df17e1f37)
+
