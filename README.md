@@ -301,6 +301,25 @@ db.<collection>.updateOne(filter, update, options);
 db.<collection>.findAndModify({query: , update: , new: , upsert: }) // new makes sure that the updated document is returned, which isn't default behaviour. upsert false by default. 
 ```
 > Replaces updateOne() + findOne(). Avoids two round trips and no other user modifications will change the accurate output
+
+* updateMany()
+```javascript
+db.<collection>.updateMany(filter, update, options);
+```
+> Not an all-or-nothing operation, won't rollback in case of errors
+
+> Lacks Isolation, ie, updates are visible right as they have been made, hence not always appropriate like transactions
+
+* deleteOne()
+```javascript
+db.<collection>.deleteOne(filter);
+```
+> Returns acknowledgement: true, and deletedCount:
+
+* deleteMany()
+```javascript
+db.<collection>.deleteMany(filter);
+```
    
 
 
