@@ -320,6 +320,9 @@ db.<collection>.deleteOne(filter);
 ```javascript
 db.<collection>.deleteMany(filter);
 ```
+
+### Modifying Query Results
+
    
 
 
