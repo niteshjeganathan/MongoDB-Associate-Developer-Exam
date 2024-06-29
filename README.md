@@ -116,5 +116,26 @@ Disadvantages
   1. M10 Tier and higher
   2. Analyses most active collections
   3. Recommends schema improvements
+ 
+## Connecting to MongoDB
+### Ways of connecting: 
+* Shell
+* Compass
+* Applications
+
+### Connection String: 
+* Standard Format - Standalone clusters, Replica Sets, Sharded Clusters
+* DNS Seed list Format - provide DNS server list, change servers in rotation, more flexible
+
+### Connecting String Format
+```
+mongodb+srv://<username>:<password>@cluster0.usqsf.mongodb.net/?retryWrites=true&w=majority
+```
+* mongodb+srv: DNS SeedList Format, TLS Security true
+* mongodb: Standard Formrat
+* <username>:<password>: Username and password for database
+* @cluster0.usqf.mongodb.net/: host : optional port ( default: 27017 )
+* ?options
+
 
 
