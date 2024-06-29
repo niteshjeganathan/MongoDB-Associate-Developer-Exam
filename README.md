@@ -238,6 +238,29 @@ MongoClient mongoClient = MongoClient.create(settings);
 2. Closing any open connections that are not in use
 3. Scaling your cluster to a higher tier that supports more connections
 4. Limiting the number of connections in connection pool using maxPoolSize connection string option
+
+
+## CRUD Operations
+### Insertion
+* insertOne()
+```javascript
+db.<collection>.insertOne()
+```
+> If <collection> doesn't exist, it'll create before inserting.
+
+> Returns acknowledge: true, insertedId: ObjectId()
+* insertMany()
+```javascript
+db.<collection>.insertMany([
+    <document1>,
+    <document2>,
+    <document3>
+])
+```
+> If <collection> doesn't exist, it'll create before inserting.
+
+> Returns acknowledged: true, insertedIds: [ObjectId(), ObjectId(), ObjectId()]
+
    
 
 
