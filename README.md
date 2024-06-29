@@ -193,5 +193,44 @@ MongoServerSelectionError: connection <monitor> to 34.239.188.169:27017 closed
 MongoServerError: bad auth : Authentication failed.
 ```
 
+## Connecting to MongoDB using Java
+### Require Java drivers for:
+ 1. Asynchronous Code
+ 2. Synchronous Code
+
+### Drivers take care of:
+ 1. Simplify connecting and interacting with database
+ 2. Establish secure connections
+ 3. Execute database operations on behalf of client applications
+ 4. Specify connection options
+
+### Official MongoDB Drivers:
+ 1. Adhere to language best practices
+ 2. Full functionality of MongoDB deployment
+ 3. Make upgrading easier
+
+### Connection Steps
+1. Add MongoDB driver to Dependencies in pom.xml file ( Can use Maven or Gradle Build System to add the dependency )
+2. Obtain valid connection string
+```javascript
+ConnectionString connectionString = new ConnectionString(mongodb+srv://<username>:<password>@cluster0.usqsf.mongodb.net/
+    ?retryWrites=true&w=majority);
+MongoClientSettings settings = MongoClientSettings.builder()
+    .applyConnectionString(connectionString)
+    .serverApi(ServerApi.builder())
+        .version(ServerApiVersion.V1)
+        .build())
+    .build();
+MongoClient mongoClient = MongoClient.create(settings);
+```
+> Application should use single mongo client instance for all database requests
+> Instantiating a mongo client instance is very resource expensive, so should avoid creating more than one
+
+> Connection String must be valid
+> 1. Certain special symbols must be percent encoded
+> 2. If users are defined in a different database, authSource parameter should be included
+> 3. Firewall shouldn't restrict the default port 27017.
+> 4. Too many open connections, lead to errors. Atlas sets limits for concurrent incoming connections. Limit is dependent on cluster tier 
+
 
 
