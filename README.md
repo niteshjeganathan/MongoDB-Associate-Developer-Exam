@@ -267,7 +267,17 @@ db.<collection>.insertMany([
 db.<collection>.find();
 db.<collection>.find({state: {$eq: 'TN'}}); // db.<collection>.find({state:'TN'}) 
 db.<collection>.find({state: {$in: ['TN', 'GJ']}});
+db.<collection>.find({"state.pop": {$gt: 10000}});
+db.<collection>.find({"state.pop": {$gte: 10000}});
+db.<collection>.find({"state.pop": {$lt: 10000}});
+db.<collection>.find({"state.pop": {$lte: 10000}});
+db.<collection>.find({products: {$elemMatch: {$eq: "InvestmentStock"}}}); // db.<collection>.find({products: {$eq: "InvestmentStock"}})
+//returns any document with InvestmentStock in it, be it an element of an array or not
+db.<collection>.find({$and: [{<expression1>}, {<expression2>}]}); // db.<collection>.find({<expression1>, <expression2>});
+db.<collection>.find({$or: [{<expression1>}, {<expression2>}]});
+// If using nested 'and' and 'or' operators, use explicit 'and' else expressions get replaced by the most recent one
 ```
+* findOne()
 
 
    
