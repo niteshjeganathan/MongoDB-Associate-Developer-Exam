@@ -279,7 +279,28 @@ db.<collection>.find({$or: [{<expression1>}, {<expression2>}]});
 ```
 * findOne()
 
+### Replacing and Deleting
+* replaceOne()
+```javascript
+db.<collection>.replaceOne(filter, replacement, options); // replacement has everything except the _id field
+```
+> Returns acknowledged: true, insertedId: , matchedCount: , modifiedCount: , upsertedCount:
 
+* updateOne()
+```javascript
+db.<collection>.updateOne(filter, update, options);
+```
+> $set - Adds new fields/Replaces existing fields
+
+> $push - Appends value to existing array/Creates new array and appends
+
+> Upsert - Inserts new document if no such existing document ( Add {upsert: true} as the options field in the query )
+
+* findAndModify()
+```javascript
+db.<collection>.findAndModify({query: , update: , new: , upsert: }) // new makes sure that the updated document is returned, which isn't default behaviour. upsert false by default. 
+```
+> Replaces updateOne() + findOne(). Avoids two round trips and no other user modifications will change the accurate output
    
 
 
