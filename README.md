@@ -137,5 +137,61 @@ mongodb+srv://<username>:<password>@cluster0.usqsf.mongodb.net/?retryWrites=true
 * @cluster0.usqf.mongodb.net/: host : optional port ( default: 27017 )
 * ?options
 
+### MongoDB Connection with Shell
+* Steps
+  1. Database
+  2. Connect
+  3. Connect with Shell
+  4. Copy Paste Connection String onto MongoDb Shell
+  5. Enter password
+* Node Js Repl Environment
+  1. JS Variables
+  2. JS Functions
+  3. JS Conditionals
+  4. JS Loops
+  5. JS Control Flow Statements
+
+### MongoDB Connection with Compass
+* GUI to query, analayse data
+* Steps
+  1. Database
+  2. Connect
+  3. Connect with Compass
+  4. Open Compass
+  5. New Connection
+  6. Toggle Edit Connection String 
+  7. Copy paste Connection String
+  8. Save and Connect
+  9. Name Cluster
+
+### MongoDB Connection with Application
+* MongoDB Drivers connect application to database
+* Drivers
+  1. C, C#, c++
+  2. Go
+  3. Rust
+  4. Java
+  5. Node JS
+  6. PHP
+  7. Python
+  8. Ruby
+  9. Swift
+  10. Scala
+* Information About Drivers
+  1. Documentation
+  2. MongoDB Development Center
+  3. MongoDB University
+
+
+### Troubleshooting Connection Errors
+* Add IP Address in Network Access Panel in Atlas
+```
+MongoServerSelectionError: connection <monitor> to 34.239.188.169:27017 closed
+```
+* Check Correct Database deployment / Check Credentials
+```
+MongoServerError: bad auth : Authentication failed.
+```
+
 
 
