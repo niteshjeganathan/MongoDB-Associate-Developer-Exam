@@ -226,11 +226,18 @@ MongoClient mongoClient = MongoClient.create(settings);
 > Application should use single mongo client instance for all database requests
 > Instantiating a mongo client instance is very resource expensive, so should avoid creating more than one
 
-> Connection String must be valid
-> 1. Certain special symbols must be percent encoded
-> 2. If users are defined in a different database, authSource parameter should be included
-> 3. Firewall shouldn't restrict the default port 27017.
-> 4. Too many open connections, lead to errors. Atlas sets limits for concurrent incoming connections. Limit is dependent on cluster tier 
+### Common Issues when connecting to Atlas Cluster
+1. Atlas IP access restrictions
+2. Invalid Connection string format ( Unencoded )
+3. Incorrect Authentication
+4. Firewall Misconfiguarion ( Default port blocked - 27017 )
+5. Unclosed Connections
 
+### Troubleshooting - Too many open Connections
+1. Restart application
+2. Closing any open connections that are not in use
+3. Scaling your cluster to a higher tier that supports more connections
+4. Limiting the number of connections in connection pool using maxPoolSize connection string option
+   
 
 
