@@ -244,7 +244,7 @@ MongoClient mongoClient = MongoClient.create(settings);
 ### Insertion
 * insertOne()
 ```javascript
-db.<collection>.insertOne()
+db.<collection>.insertOne();
 ```
 > If <collection> doesn't exist, it'll create before inserting.
 
@@ -255,11 +255,20 @@ db.<collection>.insertMany([
     <document1>,
     <document2>,
     <document3>
-])
+]);
 ```
 > If <collection> doesn't exist, it'll create before inserting.
 
 > Returns acknowledged: true, insertedIds: [ObjectId(), ObjectId(), ObjectId()]
+
+### Searching
+* find()
+```javascript
+db.<collection>.find();
+db.<collection>.find({state: {$eq: 'TN'}}); // db.<collection>.find({state:'TN'}) 
+db.<collection>.find({state: {$in: ['TN', 'GJ']}});
+```
+
 
    
 
