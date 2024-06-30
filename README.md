@@ -431,6 +431,54 @@ DeleteResult result = collection.deleteMany(query);
 System.out.println(result.getDeletedCount());
 ```
 
+### Transactions
+* Multi-document transaction is an operation that requires atomicity of read/write operations
+* It is a sequence of operations that represent a single unit of work
+* If the transaction is cancelled or fail to complete, all write operations are discarded
+* ACID Compliance
+  * Atomicity - All or nothing operations,
+  * Consistency - Correctness of database,
+  * Isolation - Multiple transactions can occur at the same time without breaking the database,
+  * Durability - All the updates are stored to a disk permanently and no system failure should affect the database)
+* Steps
+  1. Start a client session
+  2. Define transaction options ( optional )
+  3. Define sequence of operations
+  4. Start the transaction using the withTransaction() method
+  5. Release the resources used by the transaction
+> Transactions have a 60 second timer limit and will cancel anything more
+```javascript
+final MongoClient client = MongoClients.create(connectionString);
+final ClientSession clientSession = client.startSession(); // Starting a client session
+
+TransactionBody txnBody = new TransactionBody<String>(){ // Defining sequence of operations
+    public String execute() { // All CRUD operations inside this body
+        MongoCollection<Document> bankingCollection = client.getDatabase("bank").getCollection("accounts");
+
+        Bson fromAccount = eq("account_id", "MDB310054629"); // Withdrawing 200 from one account
+        Bson withdrawal = Updates.inc("balance", -200);
+
+        Bson toAccount = eq("account_id", "MDB643731035"); // Depositing 200 in another account
+        Bson deposit = Updates.inc("balance", 200);
+
+        System.out.println("This is from Account " + fromAccount.toBsonDocument().toJson() + " withdrawn " + withdrawal.toBsonDocument().toJson());
+        System.out.println("This is to Account " + toAccount.toBsonDocument().toJson() + " deposited " + deposit.toBsonDocument().toJson());
+        bankingCollection.updateOne(clientSession, fromAccount, withdrawal); // Updating withdrawal
+        bankingCollection.updateOne(clientSession, toAccount, deposit); // Updating deposit
+
+        return "Transferred funds from John Doe to Mary Doe";
+    }
+};
+
+try {
+    clientSession.withTransaction(txnBody); // Starting the transaction
+} catch (RuntimeException e){
+    System.out.println(e); 
+}finally{
+    clientSession.close(); // Releasing resources
+}
+```
+
 
    
 
