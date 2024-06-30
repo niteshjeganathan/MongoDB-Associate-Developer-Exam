@@ -354,6 +354,84 @@ db.cars.countDocuments();
 db.cars.countDocuments({category: "sedan"});
 ```
 
+## CRUD Operations using Java Driver
+### Documents
+* Java driver supports many classes for BSON objects
+* Document class is recommended since its flexible and concise data representation
+```javascript
+Document car = new Document("_id", new ObjectId()) // If ID not given, it will automatically generate 
+    .append("name": "Kodiaq")
+    .append("manufacturer": "Skoda")
+    .append("category": "SUV")
+    .append("year": new Date();
+```
+
+### Inserting 
+```javascript
+//Inserting One Document
+InsertOneResult result = collection.insertOne(car);
+BsonValue id = result.getInsertedId();
+System.out.println(id);
+
+
+//Inserting Many documents
+List<Document> cars = Arrays.asList(car1, car2);
+InsertManyResult result = collection.insertMany(cars);
+result.getInsertedIds().forEach((x, y) -> System.out.println(y.asObjectId())); // x - index of the item inserted, y - ID of the item inserted
+```
+
+### Searching
+```javascript
+collection.find(Filters.and(Filters.gte("balance": 1000), Filters.eq("account_type", "checking"))).forEach(doc -> System.out.println(doc.toJson()));
+// Same as
+// collection.find(and(gte("balance": 1000), eq("account_type", "checking"))).forEach(doc -> System.out.println(doc.toJson()));
+// Filters builder class helps us use query predicates
+
+
+// In case processing of each document is required:
+try(MongoCursor<Document> cursor = collection.find(Filters.and(Filters.gte("balance": 1000), Filters.eq("account_type", "checking"))).iterator()) {
+    while(cursor.hasNext()) {
+        System.out.println(cursor.next().toJson());
+    }
+}
+
+// In case only one document is required
+Document doc = collection.find(Filters.and(Filters.gte("balance": 1000), Filters.eq("account_type", "checking"))).first(); 
+System.out.println(doc.toJson());
+```
+
+### Updating 
+```javascript
+// Single Update Set Operation
+Bson query = Filters.eq("account_id", 1);
+Bson updates = Updates.combine(Updates.set("account_status", "active"), Updates.inc("balance", 100));
+UpdateResult result = collection.updateOne(query, updates);
+
+// Single update array operations
+Bson query = Filters.eq("account_id", 1);
+Bson updates = Updates.combine(Updates.push("loans", "new_loan"), Updates.pull("loans", "last_loan"), Updates.popLast());
+UpdateResult result = collection.updateOne(query, updates);
+
+// Multiple Updates operations
+Bson query = Filters.eq("account_type", "savings");
+Bson update = Updates.inc("balance", 1000);
+UpdateResult result = collection.updateMany(query, updates);
+```
+
+### Deleting 
+```javascript
+// Deleting single document
+Bson query = Filters.eq("account_name", "Nitesh");
+DeleteResult result = collection.deleteOne(query);
+System.out.println(result.getDeletedCount());
+
+// Deleting many documents
+Bson query = Filters.eq("account_status", "dormant");
+DeleteResult result = collection.deleteMany(query);
+System.out.println(result.getDeletedCount());
+```
+
+
    
 
 
