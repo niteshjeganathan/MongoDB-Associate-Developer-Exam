@@ -479,6 +479,162 @@ try {
 }
 ```
 
+## Aggregation 
+### Aggregation 
+> Analysis and summary of data, broken into stages
+> Stage is an aggregation operation performed on the data. Doesn't permanently alter the source data
+> Aggregation pipeline is a series of stages completed one at a time in order
+> Filtered -> Sorted -> Grouped -> Transformed
+> Documents that are output from one stage, become the input for the next stage
+```javascript
+// Structure of an aggregation pipeline
+db.collection.aggregate([
+    {
+        $stage1: {
+            { expression1 },
+            { expression2 }...
+        },
+        $stage2: {
+            { expression1 }...
+        }
+    }
+])
+```
+
+### Aggregation Operations
+* $match
+```javascript
+// Place as early as possible so that it can use indexes. It reduces the number of documents, hence processing. 
+db.cars.aggregate([
+    {$match: {"name": "Kodiaq"}}
+]);
+```
+* $group
+```javascript
+// Groups documents by a group key. Output is one document for each unique value of group key
+db.<collection>.aggregate([
+    {
+        $group:
+            {
+                _id: <expression>, // Group Key
+                <field>: { <accumulator> : <expression> }
+            }
+    }
+]);
+
+db.cars.aggregate([
+    {
+        $group:
+            {
+                _id: "$name", // Group Key
+                totalNoOfCars: { $count : {} }
+            }
+    }
+]);
+```
+* $sort
+```javascript
+// Sorts numeric values, strings, dates, timestamps
+// 1 : Ascending, -1 : Descending
+
+db.cars.aggregate([
+    {
+        $sort:
+            {
+                sales: -1
+            }
+    }
+])
+```
+* $limit
+```javascript
+db.cars.aggregate([
+    {
+        $sort:
+            {
+                sales: -1
+            }
+    },
+    {
+        $limit: 3
+    }        
+]);
+```
+* $project
+```javascript
+// Usually the last stage
+// Can include, exclude or set new fields
+
+db.cars.aggregate([
+    {
+        $project:
+            {
+                sales: 1, nameOfCar: "$name", id: 0
+            }
+    }
+]);
+```
+* $set
+```javascript
+db.cars.aggregate([
+    {
+        $set:
+            {
+                sales2024: {$round: { $multiply: [1.0012, "$sales"]}}
+            }
+    }
+]);
+```
+* $count
+```javascript
+// Returns a single document with the count value 
+db.cars.aggregate([
+    {
+        $count: "total_cars"
+    }
+]);
+```
+* $out
+```javascript
+// Writes the documents that are returned by an aggregation pipeline into a collection
+// Creates a new collection if it doesn't exist
+// If collection exists, it gets overwritten
+// If the database doesn't exist, it gets created
+// If no database is mentioned, the same database is used
+
+db.<collection>.aggregate([
+    { $out: {
+        db: "<db>",
+        coll: "<newcollection>"
+    }}
+])
+
+db.<collection>.aggregate([
+    { $out: "<newcollection>"}
+])
+
+db.cars.aggregate([
+    {
+        $sort:
+            {
+                sales: -1
+            }
+    },
+    {
+        $limit: 3
+    },
+    {
+        $out: "highest_sales"
+    }     
+]);
+
+// Run "show collections" to list out the collections and verify
+
+
+```
+
+
+
 
    
 
