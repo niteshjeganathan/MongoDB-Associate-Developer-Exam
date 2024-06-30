@@ -629,10 +629,25 @@ db.cars.aggregate([
 ]);
 
 // Run "show collections" to list out the collections and verify
-
-
 ```
 
+## Aggregation with Java Driver
+```
+private static void matchAndGroup(MongoCollection<Document> cars) {
+    Bson matchStage = Aggregate.match(Filters.eq("manufacturer": "Skoda"));
+    Bson groupStage = Aggregate.group("$category": "SUV", sum("sales");
+    cars.aggregate(Arrays.asList(matchStage, groupStage)).forEach(doc -> System.out.println(doc.toJson()));
+}
+
+private static void matchSortAndProjectStages(MongoCollection<Document> accounts){
+    Bson matchStage =
+            Aggregates.match(Filters.and(Filters.gt("balance", 1500), Filters.eq("account_type", "checking")));
+    Bson sortStage = Aggregates.sort(Sorts.orderBy(descending("balance")));
+    Bson projectStage = Aggregates.project(Projections.fields(Projections.include("account_id", "account_type", "balance"), Projections.computed("euro_balance", new Document("$divide", asList("$balance", 1.20F))), Projections.excludeId()));
+    System.out.println("Display aggregation results");
+    accounts.aggregate(asList(matchStage,sortStage, projectStage)).forEach(document -> System.out.print(document.toJson()));
+}
+```
 
 
 
