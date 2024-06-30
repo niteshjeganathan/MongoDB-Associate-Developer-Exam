@@ -481,11 +481,11 @@ try {
 
 ## Aggregation 
 ### Aggregation 
-> Analysis and summary of data, broken into stages
-> Stage is an aggregation operation performed on the data. Doesn't permanently alter the source data
-> Aggregation pipeline is a series of stages completed one at a time in order
-> Filtered -> Sorted -> Grouped -> Transformed
-> Documents that are output from one stage, become the input for the next stage
+* Analysis and summary of data, broken into stages
+* Stage is an aggregation operation performed on the data. Doesn't permanently alter the source data
+* Aggregation pipeline is a series of stages completed one at a time in order
+* Filtered -> Sorted -> Grouped -> Transformed
+* Documents that are output from one stage, become the input for the next stage
 ```javascript
 // Structure of an aggregation pipeline
 db.collection.aggregate([
