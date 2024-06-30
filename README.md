@@ -321,7 +321,38 @@ db.<collection>.deleteOne(filter);
 db.<collection>.deleteMany(filter);
 ```
 
-### Modifying Query Results
+## Modifying Query Results
+### Cursor 
+* Pointer to the result set of a query
+* db.<collection>.find() results a cursor
+* Cursor methods
+  * Chained to queries
+  * perform actions on the resulting set ( sorting / limiting )
+
+### Sorting
+```javascript
+db.cars.find({category: "sedan"}).sort({name: 1}); // Capital letters sorted first, then normal letters sorted. Can change this in options 
+```
+
+### Limiting 
+```javascript
+db.cars.find({category: "sedan"}).sort({sales: -1}).limit(3); // Improves Performance by avoiding unnecessary data operations
+```
+
+### Projection
+```javascript
+db.cars.find({}, {field: 1});
+db.cars.find({}, {field: 0});
+// Either inclusion approach or exclusion approach. Both cannot be mixed in one projection, with the exception of _id.
+// _id is always included by default, explicit exclusion is required. 
+```
+
+### Counting
+```javascript
+db.cars.countDocuments(query, options);
+db.cars.countDocuments();
+db.cars.countDocuments({category: "sedan"});
+```
 
    
 
