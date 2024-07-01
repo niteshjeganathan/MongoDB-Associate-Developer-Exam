@@ -649,7 +649,99 @@ private static void matchSortAndProjectStages(MongoCollection<Document> accounts
 }
 ```
 
+## Indexes
+### Indexes
+* Special data structures
+* Store small portion of data
+* Ordered and easy to search efficiently
+* Benefits
+  * Speed up Queries
+  * Reduce Disk I/O
+  * Reduce resources required
+  * Support equality matches, range based, and sorted results
+* Without Indexes
+  * MongoDB reads all documents ( collection scan )
+  * Sorts results in memory
+* With Indexss
+  * Only fetches documents identifies by the index based on the query
+  * Returns results faster
+* Default Index : includes only the _id field
+* Every query should use an index
+* Inserting/Updating documents -> Updating index data structure
+* Too many indexes -> slower performance since every update requires an index update as well
+* Delete unnecessary or redundant indexes
+* Types
+  * Single Field - includes only single field
+  * Compound - includes more than one field
+  * Multikey - if any one field is an array field
 
+### Single Field Indexes
+* Support queries and sorting on a single field
+```javascript
+db.<collection>.createIndex({field: 1}) // Ascending
+db.<collection>.createIndex({field: -1}) // Descending
+// Ascending/Descending doesn't matter in single field since both of them can be used for both ascending and descending sorting
+db.<collection>.createIndex({field: 1}, {unique: true}) // To enforce uniqueness
+// Throws duplicate key error if duplicate entries are entered
+db.<collection>.getIndexes() // Returns all indexes
+db.<collection>.explain().find() // This explains the method used to retrieve data
+```
+
+### Multi Field Indexes
+* Index on an array field
+* Can be single field, or compound index
+* Only one array field per index
+* Decomposes each value in an array and stores
+```javascript
+// The same way single field/compound indexes are created
+db.<collection>.createIndex({field: 1});
+// Difference is visible when you use explain() in the stages it takes
+```
+
+### Compound Indexes
+* Index on multiple fields
+* Also supports queries that match on the prefix of the index fields
+* Order of the fields matters - Equality -> Sort -> Range
+  * Equality
+    * Test exact matches on single field
+    * Should be placed first
+    * Reduces processing time
+    * Retrieves fewer documents
+  * Sort
+    * Index sort eliminates the need for in-memory sorts
+* An Index covers a query when MongoDB does not need to fetch the data from memory since all the required data is already returned by the index
+* Common projections should be added to the index so that an index covers everything required
+```javascript
+db.<collection>.createIndex({field1: 1, field2: 1, field3: -1});
+// Any query that matches:
+// db.<collection>.find({field1: "value"}).sort({randomField: 1});
+// Any query that sorts:
+// db.<collection>.find({randomField: "value"}).sort({field1: 1});
+```
+
+### Deleting Indexes
+* Indexes have a write cost
+* Too many indexes lead to poor system performance since many indexes have to be updated
+* Only delete indexes that aren't being used since it will degrade query performances if there are no other indexes available
+* Recreating an index takes time and resources
+* Hide the index and analyse the performance before deleting it, since hidden indexes aren't used but are updated.
+```javascript
+// Hiding index before deleting
+db.<collection>.hideIndex(indexName);
+db.<collection>.hideIndex({field1: 1, field2: 1, field3: -1});
+
+// Deleting Index
+db.<collection>.dropIndex(indexName);
+db.<collection>.dropIndex({field1: 1, field2: 1, field3: -1});
+
+// Deleting multiple indexes
+db.<collection>.dropIndexes(indexName);
+db.<collection>.dropIndexes(['index1', 'index2', ...]);
+
+// Deleting all Indexes
+db.<collection>.dropIndexes();
+// Deletes everything except the default index, which can never be deleted
+```
 
    
 
