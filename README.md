@@ -630,7 +630,7 @@ db.cars.aggregate([
 
 // Run "show collections" to list out the collections and verify
 ```
-* lookup
+* $lookup
 ```javascript
 // This query will output documents from the orders collection with an additional field called customer_info that contains an array of matched documents from the customers collection.
 // Doesn't actually add any fields to the original documnent, only adds the additional fields to the pipeline result set
