@@ -647,7 +647,7 @@ db.orders.aggregate([
 ```
 
 ## Aggregation with Java Driver
-```
+```javascript
 Example 1
 private static void matchAndGroup(MongoCollection<Document> cars) {
     Bson matchStage = Aggregate.match(Filters.eq("manufacturer": "Skoda"));
