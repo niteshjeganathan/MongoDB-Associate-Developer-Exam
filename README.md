@@ -630,6 +630,21 @@ db.cars.aggregate([
 
 // Run "show collections" to list out the collections and verify
 ```
+* lookup
+```javascript
+// This query will output documents from the orders collection with an additional field called customer_info that contains an array of matched documents from the customers collection.
+// Doesn't actually add any fields to the original documnent, only adds the additional fields to the pipeline result set
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "customers",        // the collection to join
+      localField: "customer_id", // field from the orders collection
+      foreignField: "customer_id", // field from the customers collection
+      as: "customer_info"       // name of the new array field to add to the orders documents
+    }
+  }
+]);
+```
 
 ## Aggregation with Java Driver
 ```
