@@ -648,6 +648,7 @@ db.orders.aggregate([
 
 ## Aggregation with Java Driver
 ```
+Example 1
 private static void matchAndGroup(MongoCollection<Document> cars) {
     Bson matchStage = Aggregate.match(Filters.eq("manufacturer": "Skoda"));
     Bson groupStage = Aggregate.group("$category": "SUV", sum("sales");
@@ -661,6 +662,32 @@ private static void matchSortAndProjectStages(MongoCollection<Document> accounts
     Bson projectStage = Aggregates.project(Projections.fields(Projections.include("account_id", "account_type", "balance"), Projections.computed("euro_balance", new Document("$divide", asList("$balance", 1.20F))), Projections.excludeId()));
     System.out.println("Display aggregation results");
     accounts.aggregate(asList(matchStage,sortStage, projectStage)).forEach(document -> System.out.print(document.toJson()));
+}
+
+Example 2
+AggregateIterable<Document> result = ordersCollection.aggregate(Arrays.asList(
+    Aggregates.match(Filters.eq("status", "A")), // $match
+    Aggregates.lookup("customers", "customer_id", "customer_id", "customer_info"), // $lookup
+    Aggregates.unwind("$customer_info"), // Unwind the array to deconstruct the array field
+    Aggregates.group("$customer_info.region", // $group
+        Accumulators.sum("totalAmount", "$amount"),
+        Accumulators.addToSet("orders", "$$ROOT")
+    ),
+    Aggregates.sort(Sorts.descending("totalAmount")), // $sort
+    Aggregates.limit(5), // $limit
+    Aggregates.project(Projections.fields( // $project
+        Projections.excludeId(),
+        Projections.include("totalAmount"),
+        Projections.include("orders")
+    )),
+    Aggregates.set(new Document("reportDate", new java.util.Date())), // $set
+    Aggregates.count("totalRegions"), // $count
+    Aggregates.out("aggregationResults") // $out
+));
+
+// Iterate over the result
+for (Document doc : result) {
+    System.out.println(doc.toJson());
 }
 ```
 
