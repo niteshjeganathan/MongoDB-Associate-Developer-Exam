@@ -787,6 +787,118 @@ db.<collection>.dropIndexes();
 // Deletes everything except the default index, which can never be deleted
 ```
 
+## MongoDB Atlas Search
+### Database Indexes
+* Used by developers and database admins to make their database queries faster
+### Search Indexes
+* Specifiy how records are referenced for relevance based search
+* Types:
+  * Dynamic Mapping
+    * All fields are indexed, except booleans, ObjectIDs, and timestamps
+  * Static Mapping
+
+### Search Index using Dynamic Mapping
+* Default option
+* Steps:
+  * Search tab
+  * Create Search Index
+  * Choose Visual Editor / JSON Editor
+  * Index Analysers, Search Analysers. Many options available. Lucene is industry standard
+  * Dynamic Mapping On to index all fields, so no specific field mappings are required
+  * Create Search Index Button
+* When to use:
+  * Dynamic field mapping is used to search all of the fields for the search term, with equal weight on all items
+
+### Search Index using Static Mapping
+* The fields being queried are always the same
+* When the user only would care about certain fields
+* Makes it quicker by minimising the fields to be indexed
+* Steps
+  * Search Tab
+  * Choose Visual Editor / JSON Editor
+  * Switch off Dynamic Mapping
+  * Select Add Fields to specifiy fields
+  * Add Field Name, Add Data type
+  * Create Search Index Button
+
+### Search and Compound Operators
+* Compound operator enables us to give weights to certain fields
+* Options for compound operators:
+  * must - only records that meet criteria
+  * mustNot - only records that don't meet criteria
+  * should - allows us to give weight by customising score
+  * filter - doesn't affect score, but returns result that match the clause
+
+```javascript
+$search {
+  "compound": {
+    "must": [{
+      "text": {
+        "query": "field",
+        "path": "habitat"
+      }
+    }],
+    "should": [{
+      "range": {
+        "gte": 45,
+        "path": "wingspan_cm",
+        "score": {"constant": {"value": 5}}
+      }
+    }]
+  }
+}
+```
+
+### Grouping Results using Facets
+* Facets are buckets we use to group results
+* Grouping results like people, posts, comments
+* Datatypes considered for grouping:
+  * Numbers
+  * Dates
+  * Strings
+* Configure to use facets in datatypes section while creating static indexes
+* Buckets are not visible in the results, but are visible in the search metaData
+* metaData:
+  * count
+  * facets
+```javascript
+$searchMeta: {
+    "facet": {
+        "operator": {
+            "text": {
+            "query": ["Northern Cardinal"],
+            "path": "common_name"
+            }
+        },
+        "facets": {
+            "sightingWeekFacet": {
+                "type": "date",
+                "path": "sighting",
+                "boundaries": [ISODate("2022-01-01"), 
+                    ISODate("2022-01-08"),
+                    ISODate("2022-01-15"),
+                    ISODate("2022-01-22")],
+                "default" : "other"
+            }
+        }
+    }
+}
+```
+
+### Tokenisation Methods using Autocomplete
+* Edge N-Gram Tokenisation
+  * Increasing lengths from the beginning of the word
+  * M, Mo, Mon, Mong, Mongo ...
+* Standard Tokenisation
+  * Based on standard word boundaries
+  * Less useful since it doesn't generate parital tokens
+  * Usually used in conjuction with other tokenisers
+* N-gram Tokenisation
+  * Breaks text into contiguous texts
+  * Mo, on, go, ...
+ 
+ 
+
    
 
 
