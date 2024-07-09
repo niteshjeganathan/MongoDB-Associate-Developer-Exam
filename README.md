@@ -276,6 +276,8 @@ db.<collection>.find({products: {$elemMatch: {$eq: "InvestmentStock"}}}); // db.
 db.<collection>.find({$and: [{<expression1>}, {<expression2>}]}); // db.<collection>.find({<expression1>, <expression2>});
 db.<collection>.find({$or: [{<expression1>}, {<expression2>}]});
 // If using nested 'and' and 'or' operators, use explicit 'and' else expressions get replaced by the most recent one
+// To get all the documents from the cursor
+db.<collection>.find().toArray();
 ```
 * findOne()
 
