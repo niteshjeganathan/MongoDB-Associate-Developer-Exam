@@ -896,7 +896,34 @@ $searchMeta: {
 * N-gram Tokenisation
   * Breaks text into contiguous texts
   * Mo, on, go, ...
- 
+
+ ## Random Facts
+ * Maximum size of a document - 16GB
+ * Neospatial datatype is not supported in MongoDB
+ * db.collection.explain() and cursor.explain() both works
+ * Router read reqeusts to specific shard based on the specified shard key
+ * Config Servers keep the metadata of a sharded cluster
+ * All operations in MongoDB are atomic at the document level
+ * Update with multi: true option can update many documents
+ * Default write concern is Acknowledged
+ * All operations are recorded in oplog
+ * Oplog in 64-bit Linux System can be from 1GB to 50GB
+ * Default storage engine is MMAPV1
+ * GridFS to store and retrieve files that exceed 16MB limit
+ * Document cannot be more than 16MB so that it doesn't use excessive amount of RAM, excessive amount of bandwidtch
+ * ObjectID is a 12byte BSON key in which the last 3 bytes represent a 3 byte counter starting with a random value
+ * Binary Data is not supported in JSON, but in BSON
+ * Mongodump is used for taking backups
+ * Mongostat counts the database operations by type
+ * Quantity of data contained in the database is stored in dbStats
+ * Motop, Gangila, Nagios can be configured to monitor a MongoDB cluster
+ * $hint can be used to specifiy a particular index
+ * Mongoose is used to model application data in node.js
+ * explain() command runs in the queryPlanner mode
+ * MongoDB writes take 100ms to the journal
+ * Maximum index key limit : 1024bytes
+ * Maximum number of indexes : 64
+ * 
  
 
    
